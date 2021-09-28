@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
-
-import { useBookmarkedCats } from 'data';
-import { BookmarkItem } from 'component/bookmark';
-import { withSpinner } from 'hoc';
 import { FlatList } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
+
+import { BookmarkItem } from 'component/bookmark';
+import { useBookmarkedCats } from 'data';
+import { withSpinner } from 'hoc';
 
 export const BookmarksPage = withSpinner(({
 
@@ -24,12 +24,12 @@ export const BookmarksPage = withSpinner(({
     <Container>
       <FlatList
         data={cats}
+        numColumns={3}
         keyExtractor={x => `${x.id}`}
         renderItem={({ item }) => <BookmarkItem data={item} />}
-        numColumns={3}
+        ListFooterComponent={loading ? <ActivityIndicator/> : <></>}
         onEndReachedThreshold={0.8}
         onEndReached={onEndReached}
-        ListFooterComponent={loading ? <ActivityIndicator/> : <></>}
       />
     </Container>
   );
