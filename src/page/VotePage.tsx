@@ -25,7 +25,7 @@ export const VotePage = withSpinner(({
       <Push />
 
       <CatImageContainer>
-        {cats.map((x, idx) => (
+        {cats.map((x, idx) => x.id && (
           <CatImage
             key={x.id}
             state={IdxToState[idx]}
