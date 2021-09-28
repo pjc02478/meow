@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import styled from 'styled-components/native';
 import { Alert, Dimensions } from 'react-native';
 import FastImage from 'react-native-fast-image';
@@ -7,7 +7,6 @@ import { useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { HorizontalLayout, Push } from 'atom/layout';
-import { useRemoveBookmark } from 'data';
 import { IBookmark } from 'model';
 import { withOnPress } from 'hoc';
 
@@ -48,7 +47,7 @@ export const BookmarkItem = memo(({
         source={{ uri: data.image.url }}
       />
 
-      <HorizontalLayout fill style={{ zIndex: 10 }}>
+      <HorizontalLayout fill>
         <Push />
         <RemoveIcon
           onPress={onPressRemove}
@@ -79,5 +78,4 @@ const RemoveIcon = withOnPress(styled(Ionicons).attrs({
   name: 'close-circle',
   size: 28,
 })`
-  z-index: 10;
 `);
