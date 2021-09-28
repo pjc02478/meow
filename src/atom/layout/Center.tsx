@@ -18,5 +18,8 @@ export const Center = ({
 };
 
 const Container = styled.View<Partial<CenterProps>>`
+  flex: 1;
+
   align-items: center;
+  justify-content: center;
 `;

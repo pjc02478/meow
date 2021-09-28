@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { FlatList } from 'react-native';
 
-import { ListLoadingIndicator } from 'atom/feedback';
+import { ListLoadingIndicator, RetryIndicator } from 'atom/feedback';
 import { BookmarkItem } from 'component/bookmark';
 import { useBookmarkedCats } from 'data';
 import { withSpinner } from 'hoc';
 import { IBookmark } from 'model';
+import { Center } from 'atom/layout';
+import { Button } from 'atom/button';
+import { Text } from 'react-native-paper';
 
 export const BookmarksPage = withSpinner(({
 
@@ -15,8 +18,12 @@ export const BookmarksPage = withSpinner(({
   const {
     data: cats,
     loading,
+    error,
+    refetch,
     remove: removeBookmark,
   } = useBookmarkedCats(page);
+
+  console.log('cats', cats);
 
   const onRemoveBookmark = (bookmark: IBookmark) => {
     removeBookmark(bookmark.id);
@@ -27,6 +34,12 @@ export const BookmarksPage = withSpinner(({
 
   return (
     <Container>
+      {!!error && (
+        <RetryIndicator
+          onRetry={() => refetch(page)}
+        />
+      )}
+
       <FlatList
         data={cats}
         numColumns={3}

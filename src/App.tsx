@@ -13,7 +13,7 @@ import { BookmarkedCatsDataProvider } from 'data';
 
 const App = () => {
 
-  prefetchFirstPage(BookmarkedCatsDataProvider, 45);
+  //prefetchFirstPage(BookmarkedCatsDataProvider, 45);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

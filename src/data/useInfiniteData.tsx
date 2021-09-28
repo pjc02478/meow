@@ -18,14 +18,14 @@ export const useInfiniteData = <T extends IInfiniteDataProvider<TData>, TData ex
 ) => {
   const dataProvider = useMemo(() => new dataProviderType(), [dataProviderType]);
   const [result, setResult] = useState<TData[]>([]);
+  const [error, setError] = useState<any>();
   const [loading, setLoading] = useState(false);
 
   const removeItem = async (id: number) => {
     await dataProvider.remove(id);
     setResult(result => result.filter(x => x.id !== id));
   };
-
-  useEffect(() => {
+  const fetchPage = (page: number) => {
     (async () => {
       try {
         setLoading(true);
@@ -34,17 +34,25 @@ export const useInfiniteData = <T extends IInfiniteDataProvider<TData>, TData ex
           page,
         );
         setResult(result => [...result, ...data]);
+      } catch(e) {
+        setError(e);
       } finally {
         setLoading(false);
       }
     })();
+  };
+
+  useEffect(() => {
+    fetchPage(page);
   }, [page]);
 
   return {
     data: result,
     loading,
+    error,
 
     // mutators
+    refetch: fetchPage,
     remove: removeItem,
   };
 };
