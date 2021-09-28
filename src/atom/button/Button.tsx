@@ -1,11 +1,5 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Button as MuiButton } from 'react-native-paper';
-import { debounce } from 'lodash';
-
-const debounceOptions = {
-  leading: true,
-  trailing: false,
-};
 
 interface ButtonProps {
   debounce?: number;
@@ -19,13 +13,9 @@ export const Button = ({
   ...props
 }: ButtonProps) => {
 
-  const onPrePress = useCallback(debounce(() => {
-    onPress?.();
-  }, debounceDuration, debounceOptions), [debounce]);
-
   return (
     <MuiButton
-      onPress={onPrePress}
+      onPress={onPress}
       {...props}
     >
       {children}
