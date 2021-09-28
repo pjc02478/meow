@@ -3,7 +3,7 @@ import {
   SafeAreaView,
   StatusBar,
 } from 'react-native';
-import { ToastProvider } from 'react-native-toast-notifications';
+import Toast, { ToastProvider } from 'react-native-toast-notifications';
 import { SWRConfig } from 'swr';
 
 import { fetcher } from 'data/fetcher';
@@ -29,6 +29,7 @@ const App = () => {
         >
           <Navigation />
         </SWRConfig>
+        <Toast ref={(ref) =>  (global as any)['toast'] = ref} />
       </ToastProvider>
     </SafeAreaView>
   );
