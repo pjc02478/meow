@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import { FlatList } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 
+import { ListLoadingIndicator } from 'atom/feedback';
 import { BookmarkItem } from 'component/bookmark';
 import { useBookmarkedCats } from 'data';
 import { withSpinner } from 'hoc';
@@ -41,6 +42,9 @@ export const BookmarksPage = withSpinner(({
         ListFooterComponent={loading ? <ActivityIndicator/> : <></>}
         onEndReachedThreshold={0.8}
         onEndReached={onEndReached}
+      />
+      <ListLoadingIndicator
+        loading={loading}
       />
     </Container>
   );
