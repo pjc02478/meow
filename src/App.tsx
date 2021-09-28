@@ -3,24 +3,28 @@ import {
   SafeAreaView,
   StatusBar,
 } from 'react-native';
+import { ToastProvider } from 'react-native-toast-notifications';
 import { SWRConfig } from 'swr';
 
 import { fetcher } from 'data/fetcher';
 import { Navigation } from './Navigation';
-import { Text } from 'react-native-paper';
 
 const App = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar barStyle="dark-content" />
-      <SWRConfig
-        value={{
-          fetcher,
-          suspense: true,
-        }}
+      <ToastProvider
+        offsetBottom={60}
       >
-        <Navigation />
-      </SWRConfig>
+        <SWRConfig
+          value={{
+            fetcher,
+            suspense: true,
+          }}
+        >
+          <Navigation />
+        </SWRConfig>
+      </ToastProvider>
     </SafeAreaView>
   );
 };
