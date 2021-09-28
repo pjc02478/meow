@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import {
   BookmarksPage,
@@ -19,17 +20,17 @@ export const Navigation = () => {
         <Tab.Screen
           name="Vote"
           component={VotePage}
-          options={{ title: 'Do you like cat?' }}
+          options={{ tabBarIcon: (props) => <Ionicons name="ios-logo-octocat" {...props} />, tabBarLabel: () => <></>, title: 'Do you like cat?' }}
         />
         <Tab.Screen
           name="Bookmarks"
           component={BookmarksPage}
-          options={{ title: 'I like cats' }}
+          options={{ tabBarIcon: (props) => <Ionicons name="heart-circle-outline" {...props} />, tabBarLabel: () => <></>, title: 'I like cats' }}
         />
         <Tab.Screen
           name="ImageViewer"
           component={ImageViewerPage}
-          options={{ headerShown: false }}
+          options={{ tabBarIcon: (props) => <Ionicons name="ios-list" {...props} />, headerShown: false }}
         />
       </Tab.Navigator>
     </NavigationContainer>
