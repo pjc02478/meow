@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import FastImage from 'react-native-fast-image';
 import SplashScreen from 'react-native-splash-screen';
 
@@ -8,6 +8,13 @@ interface InitialImageLoaderProps {
 export const InitialImageLoader = ({
   uri,
 }: InitialImageLoaderProps) => {
+
+  useEffect(() => {
+    const tid = setTimeout(() => {
+      SplashScreen.hide();
+    }, 1000);
+    return () => clearTimeout(tid);
+  }, []);
 
   return (
     <FastImage
