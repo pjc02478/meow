@@ -34,6 +34,7 @@
     "@babel/preset-env": "^7.15.6",
     "@babel/runtime": "^7.12.5",
     "@react-native-community/eslint-config": "^2.0.0",
+    "@testing-library/react-native": "^7.2.0",
     "@types/jest": "^26.0.23",
     "@types/lodash": "^4.14.175",
     "@types/react-native": "^0.65.0",

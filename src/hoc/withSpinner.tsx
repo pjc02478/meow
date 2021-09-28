@@ -1,7 +1,7 @@
 import React from'react';
 import { ActivityIndicator } from 'react-native-paper';
 
-export const withSpinner = (Component: React.FC, SpinnerComponent?: React.FC) => (props: any) => {
+export const withSpinner = (Component: React.FC<any>, SpinnerComponent?: React.FC) => (props: any) => {
   return (
     <React.Suspense
       fallback={SpinnerComponent || DefaultSpinner}
