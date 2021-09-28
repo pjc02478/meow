@@ -1,7 +1,8 @@
-import { mutate } from "swr";
+import { mutate } from 'swr';
+import { API_ENDPOINT, API_KEY } from 'react-native-dotenv';
 
-const Endpoint = process.env.API_ENDPOINT || 'https://api.thecatapi.com/v1';
-const ApiKey = process.env.API_KEY;
+const Endpoint = API_ENDPOINT || 'https://api.thecatapi.com/v1';
+const ApiKey = API_KEY;
 
 export const mutator = async (url: string, body: Record<string, any>) => {
   const response = await (await fetch(Endpoint + url, {
