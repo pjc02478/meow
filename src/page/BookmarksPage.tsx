@@ -6,6 +6,7 @@ import { ActivityIndicator } from 'react-native-paper';
 import { BookmarkItem } from 'component/bookmark';
 import { useBookmarkedCats } from 'data';
 import { withSpinner } from 'hoc';
+import { IBookmark } from 'model';
 
 export const BookmarksPage = withSpinner(({
 
@@ -14,8 +15,12 @@ export const BookmarksPage = withSpinner(({
   const {
     data: cats,
     loading,
+    remove: removeBookmark,
   } = useBookmarkedCats(page);
 
+  const onRemoveBookmark = (bookmark: IBookmark) => {
+    removeBookmark(bookmark.id);
+  };
   const onEndReached = () => {
     setPage(page => page + 1);
   };
@@ -26,7 +31,13 @@ export const BookmarksPage = withSpinner(({
         data={cats}
         numColumns={3}
         keyExtractor={x => `${x.id}`}
-        renderItem={({ item, ...props }) => <BookmarkItem data={item} {...props} />}
+        renderItem={({ item, ...props }) => (
+          <BookmarkItem
+            data={item}
+            onRemove={() => onRemoveBookmark(item)}
+            {...props}
+          />
+        )}
         ListFooterComponent={loading ? <ActivityIndicator/> : <></>}
         onEndReachedThreshold={0.8}
         onEndReached={onEndReached}

@@ -15,16 +15,14 @@ const { width: deviceWidth } = Dimensions.get('window');
 
 interface BookmarkItemProps {
   data: IBookmark;
+  onRemove: () => void;
 };
 export const BookmarkItem = memo(({
   data,
+  onRemove,
 }: BookmarkItemProps) => {
   const navigation = useNavigation();
-  const removeBookmark = useRemoveBookmark();
 
-  const onRemoveBookmark = async () => {
-    await removeBookmark(data.id);
-  };
   const onPressImage = () => {
     navigation.navigate('ImageViewer', { uri: data.image.url });
   };
@@ -37,7 +35,7 @@ export const BookmarkItem = memo(({
       {
         style: 'destructive',
         text: 'Yes',
-        onPress: onRemoveBookmark,
+        onPress: onRemove,
       }
     ])
   };

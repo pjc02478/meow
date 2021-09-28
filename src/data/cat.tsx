@@ -3,7 +3,8 @@ import FastImage from 'react-native-fast-image';
 import useSWR, { useSWRConfig } from 'swr';
 
 import { IBookmark, ICat, VoteKind } from 'model';
-import { HttpMethods, mutator } from './fetcher';
+import { fetcher, HttpMethods, mutator } from './fetcher';
+import { IInfiniteDataProvider, useInfiniteData } from 'data';
 
 const PageSize = 45;
 const LoadPerRequest = 10;
@@ -11,28 +12,26 @@ const Threshold = 0.7;
 
 interface ICatResponse extends Array<ICat> {
 };
-interface IBookmarkResponse extends Array<IBookmark> {
+
+class BookmarkedCatsDataProvider implements IInfiniteDataProvider<IBookmark> {
+  async get(pageSize: number, page: number) {
+    return await fetcher(
+      `/favourites?limit=${pageSize}&page=${page}`,
+    );
+  }
+  async remove(id: number) {
+    await mutator(
+      `/favourites/${id}`,
+      {},
+      HttpMethods.Delete,
+    );
+  }
 };
 
 export const useBookmarkedCats = (page: number) => {
-  const [result, setResult] = useState<IBookmark[]>([]);
-  const {
-    data,
-    error,
-    isValidating,
-  } = useSWR<IBookmarkResponse>(`/favourites?limit=${PageSize}&page=${page}`, {
-    suspense: false,
+  return useInfiniteData(BookmarkedCatsDataProvider, page, {
+    pageSize: PageSize,
   });
-
-  useEffect(() => {
-    if (!data) return;
-    setResult(result => [...result, ...data]);
-  }, [data]);
-
-  return {
-    data: result,
-    loading: !data && isValidating,
-  };
 };
 
 export const useVote = () => {
@@ -46,11 +45,6 @@ export const useVote = () => {
         image_id: id,
       }),
     ]);
-  };
-};
-export const useRemoveBookmark = () => {
-  return async (id: number) => {
-    await mutator(`/favourites/${id}`, {}, HttpMethods.Delete);
   };
 };
 
