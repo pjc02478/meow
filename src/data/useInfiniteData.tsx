@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 
-interface IData {
+export interface IData {
   id: number;
 };
 export interface IInfiniteDataProvider<TData extends IData> {

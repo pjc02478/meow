@@ -5,6 +5,7 @@ import useSWR, { useSWRConfig } from 'swr';
 import { IBookmark, ICat, VoteKind } from 'model';
 import { fetcher, HttpMethods, mutator } from './fetcher';
 import { IInfiniteDataProvider, useInfiniteData } from 'data';
+import { withPrefetch } from './withPrefetch';
 
 const PageSize = 45;
 const LoadPerRequest = 10;
@@ -13,7 +14,7 @@ const Threshold = 0.7;
 interface ICatResponse extends Array<ICat> {
 };
 
-class BookmarkedCatsDataProvider implements IInfiniteDataProvider<IBookmark> {
+export class BookmarkedCatsDataProvider implements IInfiniteDataProvider<IBookmark> {
   async get(pageSize: number, page: number) {
     return await fetcher(
       `/favourites?limit=${pageSize}&page=${page}`,
@@ -29,7 +30,7 @@ class BookmarkedCatsDataProvider implements IInfiniteDataProvider<IBookmark> {
 };
 
 export const useBookmarkedCats = (page: number) => {
-  return useInfiniteData(BookmarkedCatsDataProvider, page, {
+  return useInfiniteData(withPrefetch(BookmarkedCatsDataProvider), page, {
     pageSize: PageSize,
   });
 };

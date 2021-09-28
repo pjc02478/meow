@@ -8,8 +8,13 @@ import { SWRConfig } from 'swr';
 
 import { fetcher } from 'data/fetcher';
 import { Navigation } from './Navigation';
+import { prefetchFirstPage } from 'data/withPrefetch';
+import { BookmarkedCatsDataProvider } from 'data';
 
 const App = () => {
+
+  prefetchFirstPage(BookmarkedCatsDataProvider, 45);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar barStyle="dark-content" />
