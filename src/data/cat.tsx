@@ -37,6 +37,15 @@ export const useBookmarkedCats = (page: number) => {
 
 export const useVote = () => {
   return async (id: string, voteKind: VoteKind) => {
+    if (Math.random() > 0.5) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          reject('Intented error');
+        }, 200);
+      });
+      return;
+    }
+
     return Promise.all([
       mutator('/votes', {
         image_id: id,
