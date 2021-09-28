@@ -6,6 +6,7 @@ import {
   BookmarksPage,
   VotePage,
 } from 'page';
+import { ImageViewerPage } from 'page/ImageViewerPage';
 
 const Tab = createBottomTabNavigator();
 
@@ -24,6 +25,11 @@ export const Navigation = () => {
           name="Bookmarks"
           component={BookmarksPage}
           options={{ title: 'I like cats' }}
+        />
+        <Tab.Screen
+          name="ImageViewer"
+          component={ImageViewerPage}
+          options={{ headerShown: false }}
         />
       </Tab.Navigator>
     </NavigationContainer>

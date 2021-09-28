@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import { useNavigation } from '@react-navigation/native';
 
 import { IBookmark } from 'model';
 
@@ -13,9 +14,16 @@ interface BookmarkItemProps {
 export const BookmarkItem = ({
   data,
 }: BookmarkItemProps) => {
+  const navigation = useNavigation();
+
+  const onPressImage = () => {
+    navigation.navigate('ImageViewer', { uri: data.image.url });
+  };
 
   return (
-    <Container>
+    <Container
+      onPress={onPressImage}
+    >
       <InnerImage
         source={{ uri: data.image.url }}
       />
@@ -23,7 +31,7 @@ export const BookmarkItem = ({
   );
 };
 
-const Container = styled.View`
+const Container = styled.TouchableOpacity`
 `;
 const InnerImage = styled(FastImage).attrs({
   resizeMode: 'cover',
