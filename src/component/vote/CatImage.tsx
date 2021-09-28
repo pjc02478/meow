@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components/native';
 import FastImage from 'react-native-fast-image';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import { ICat } from 'model';
-import Animated, { cancelAnimation, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 export enum CatImageState {
   FadeIn,
