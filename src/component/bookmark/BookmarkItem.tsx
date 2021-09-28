@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
 import FastImage from 'react-native-fast-image';
@@ -11,7 +11,7 @@ const { width: deviceWidth } = Dimensions.get('window');
 interface BookmarkItemProps {
   data: IBookmark;
 };
-export const BookmarkItem = ({
+export const BookmarkItem = memo(({
   data,
 }: BookmarkItemProps) => {
   const navigation = useNavigation();
@@ -29,7 +29,9 @@ export const BookmarkItem = ({
       />
     </Container>
   );
-};
+}, (prev: BookmarkItemProps, next: BookmarkItemProps) => {
+  return prev.data?.id === next.data?.id;
+});
 
 const Container = styled.TouchableOpacity`
 `;
