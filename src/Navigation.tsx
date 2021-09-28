@@ -17,7 +17,7 @@ const BookmarksStack = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Bookmarks"
+        name="List"
         component={BookmarksPage}
         options={{ title: 'I like cats' }}
       />

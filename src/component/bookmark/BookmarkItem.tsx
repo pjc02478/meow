@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
 import FastImage from 'react-native-fast-image';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
 
 import { IBookmark } from 'model';
@@ -33,7 +34,7 @@ export const BookmarkItem = memo(({
   return prev.data?.id === next.data?.id;
 });
 
-const Container = styled.TouchableOpacity`
+const Container = styled(TouchableOpacity)`
 `;
 const InnerImage = styled(FastImage).attrs({
   resizeMode: 'cover',

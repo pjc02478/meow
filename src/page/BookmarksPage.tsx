@@ -26,7 +26,7 @@ export const BookmarksPage = withSpinner(({
         data={cats}
         numColumns={3}
         keyExtractor={x => `${x.id}`}
-        renderItem={({ item }) => <BookmarkItem data={item} />}
+        renderItem={({ item, ...props }) => <BookmarkItem data={item} {...props} />}
         ListFooterComponent={loading ? <ActivityIndicator/> : <></>}
         onEndReachedThreshold={0.8}
         onEndReached={onEndReached}
