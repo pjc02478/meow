@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { Button } from 'react-native-paper';
 import { useToast } from 'react-native-toast-notifications';
 
+import { Button } from 'atom/button';
 import { HorizontalLayout, Space } from 'atom/layout';
 import { useVote } from 'data';
 import { ICat, VoteKind } from 'model';
@@ -53,10 +53,12 @@ const Container = styled(HorizontalLayout)`
 const LikeButton = styled(Button).attrs({
   icon: 'like',
   mode: 'contained',
+  debounce: 500,
 })`
 `;
 const DislikeButton = styled(Button).attrs({
   icon: 'dislike',
   mode: 'contained',
+  debounce: 500,
 })`
 `;

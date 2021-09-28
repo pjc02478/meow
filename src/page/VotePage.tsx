@@ -13,9 +13,9 @@ export const VotePage = withSpinner(({
   const [offset, setOffset] = useState(0);
   const cats = useCat(offset);
 
-  const onVote = useCallback(debounce(() => {
+  const onVote = () => {
     setOffset(offset => offset + 1);
-  }, 500, { leading: true, trailing: false }), []);
+  };
   const onRollback = () => {
     setOffset(offset => offset - 1);
   };
