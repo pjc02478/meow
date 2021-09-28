@@ -38,6 +38,7 @@ export const BookmarksPage = withSpinner(({
             {...props}
           />
         )}
+        initialNumToRender={30}
         onEndReachedThreshold={0.5}
         onEndReached={onEndReached}
       />
