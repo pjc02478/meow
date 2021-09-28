@@ -30,6 +30,8 @@ export const BookmarksPage = withSpinner(({
       <FlatList
         data={cats}
         numColumns={3}
+        initialNumToRender={6}
+        windowSize={6}
         keyExtractor={x => `${x.id}`}
         renderItem={({ item, ...props }) => (
           <BookmarkItem
@@ -38,7 +40,6 @@ export const BookmarksPage = withSpinner(({
             {...props}
           />
         )}
-        initialNumToRender={30}
         onEndReachedThreshold={0.5}
         onEndReached={onEndReached}
       />
