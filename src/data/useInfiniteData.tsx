@@ -13,10 +13,10 @@ interface UseInfiniteDataOptions {
 };
 export const useInfiniteData = <T extends IInfiniteDataProvider<TData>, TData extends IData>(
   dataProviderType: new () => T,
-  page: number,
   options: UseInfiniteDataOptions = DefaultUseInfiniteDataOptions,
 ) => {
   const dataProvider = useMemo(() => new dataProviderType(), [dataProviderType]);
+  const [page, setPage] = useState(0);
   const [result, setResult] = useState<TData[]>([]);
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState(false);
@@ -25,34 +25,44 @@ export const useInfiniteData = <T extends IInfiniteDataProvider<TData>, TData ex
     await dataProvider.remove(id);
     setResult(result => result.filter(x => x.id !== id));
   };
-  const fetchPage = (page: number) => {
-    (async () => {
-      try {
-        setLoading(true);
-        const data = await dataProvider.get(
-          options.pageSize || DefaultUseInfiniteDataOptions.pageSize!,
-          page,
-        );
-        setResult(result => [...result, ...data]);
-      } catch(e) {
-        setError(e);
-      } finally {
-        setLoading(false);
-      }
-    })();
+  const fetchPage = async (page: number) => {
+    try {
+      setLoading(true);
+      const data = await dataProvider.get(
+        options.pageSize || DefaultUseInfiniteDataOptions.pageSize!,
+        page,
+      );
+      setResult(result => [...result, ...data]);
+      setError(null);
+
+      return true;
+    } catch(e) {
+      setError(e);
+
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  };
+  const advance = async () => {
+    const nextPage = page + 1;
+    if (await fetchPage(nextPage))
+      setPage(nextPage);
   };
 
   useEffect(() => {
     fetchPage(page);
-  }, [page]);
+  }, []);
 
   return {
+    page,
     data: result,
     loading,
     error,
 
     // mutators
-    refetch: fetchPage,
+    advance,
+    retry: () => !!error && fetchPage(page),
     remove: removeItem,
   };
 };

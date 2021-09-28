@@ -14,29 +14,28 @@ import { Text } from 'react-native-paper';
 export const BookmarksPage = withSpinner(({
 
 }) => {
-  const [page, setPage] = useState(0);
   const {
+    page,
     data: cats,
     loading,
     error,
-    refetch,
+    advance,
+    retry,
     remove: removeBookmark,
-  } = useBookmarkedCats(page);
-
-  console.log('cats', cats);
+  } = useBookmarkedCats();
 
   const onRemoveBookmark = (bookmark: IBookmark) => {
     removeBookmark(bookmark.id);
   };
   const onEndReached = () => {
-    setPage(page => page + 1);
+    advance();
   };
 
   return (
     <Container>
       {!!error && (
         <RetryIndicator
-          onRetry={() => refetch(page)}
+          onRetry={() => retry()}
         />
       )}
 

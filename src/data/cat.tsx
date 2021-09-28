@@ -31,8 +31,8 @@ export class BookmarkedCatsDataProvider implements IInfiniteDataProvider<IBookma
   }
 };
 
-export const useBookmarkedCats = (page: number) => {
-  return useInfiniteData(withPrefetch(BookmarkedCatsDataProvider), page, {
+export const useBookmarkedCats = () => {
+  return useInfiniteData(withPrefetch(BookmarkedCatsDataProvider), {
     pageSize: PageSize,
   });
 };
