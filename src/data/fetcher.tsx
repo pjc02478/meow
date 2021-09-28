@@ -20,10 +20,6 @@ export const mutator = async (
   errorHandler?: ErrorHandler,
 ) => {
   try {
-    if (Math.random() > 0.5) {
-      throw new Error('hi');
-    }
-
     const response = await (await fetch(Endpoint + url, {
       method: method || 'POST',
       body: JSON.stringify(body),
