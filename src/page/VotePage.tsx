@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components/native';
+import { debounce } from 'lodash';
 
 import { useCat } from 'data';
 import { CatImage, VoteButtons } from 'component/vote';
@@ -13,8 +14,11 @@ export const VotePage = withSpinner(({
   const [offset, setOffset] = useState(0);
   const cat = useCat(offset);
 
-  const onVote = () => {
-    setOffset(offset + 1);
+  const onVote = useCallback(debounce(() => {
+    setOffset(offset => offset + 1);
+  }, 500, { leading: true, trailing: false }), []);
+  const onRollback = () => {
+    setOffset(offset => offset - 1);
   };
 
   return (
