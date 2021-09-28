@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { Button } from 'react-native-paper';
+import { useToast } from 'react-native-toast-notifications';
 
 import { HorizontalLayout, Space } from 'atom/layout';
 import { useVote } from 'data';
@@ -16,6 +17,7 @@ export const VoteButtons = ({
   onVote,
   onRollback,
 }: VoteButtonsProps) => {
+  const toast = useToast();
   const vote = useVote();
 
   const onPressVote = async (voteKind: VoteKind) => {
@@ -24,6 +26,7 @@ export const VoteButtons = ({
       await vote(data.id, voteKind);
     } catch(e) {
       console.error(e);
+      toast.show('에러가 발생했습니다.', { type: 'danger' });
       onRollback();
     }
   };
