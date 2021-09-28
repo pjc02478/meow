@@ -6,8 +6,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {
   BookmarksPage,
   VotePage,
+  ImageViewerPage,
 } from 'page';
-import { ImageViewerPage } from 'page/ImageViewerPage';
 
 const Tab = createBottomTabNavigator();
 
