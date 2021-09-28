@@ -9,19 +9,22 @@ import { ICat, VoteKind } from 'model';
 interface VoteButtonsProps {
   data: ICat;
   onVote: () => void;
+  onRollback: () => void;
 };
 export const VoteButtons = ({
   data,
   onVote,
+  onRollback,
 }: VoteButtonsProps) => {
   const vote = useVote();
 
   const onPressVote = async (voteKind: VoteKind) => {
     try {
-      await vote(data.id, voteKind);
       onVote();
+      await vote(data.id, voteKind);
     } catch(e) {
       console.error(e);
+      onRollback();
     }
   };
 

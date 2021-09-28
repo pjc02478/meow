@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import { debounce } from 'lodash';
 
 import { useCat } from 'data';
-import { CatImage, VoteButtons } from 'component/vote';
+import { CatImage, CatImageState, VoteButtons } from 'component/vote';
 import { ActivityIndicator, Text } from 'react-native-paper';
 import { Push, Space } from 'atom/layout';
 import { withSpinner } from 'hoc';
@@ -12,7 +12,7 @@ export const VotePage = withSpinner(({
 
 }) => {
   const [offset, setOffset] = useState(0);
-  const cat = useCat(offset);
+  const cats = useCat(offset);
 
   const onVote = useCallback(debounce(() => {
     setOffset(offset => offset + 1);
@@ -24,21 +24,40 @@ export const VotePage = withSpinner(({
   return (
     <Container>
       <Push />
-      <CatImage
-        data={cat}
-      />
+
+      <CatImageContainer>
+        {cats.map((x, idx) => (
+          <CatImage
+            key={x.id}
+            state={IdxToState[idx]}
+            data={x}
+          />
+        ))}
+      </CatImageContainer>
+
       <Space height={40} />
       <VoteButtons
-        data={cat}
+        data={cats[1]}
         onVote={onVote}
+        onRollback={onRollback}
       />
       <Push />
     </Container>
   );
 });
 
+const IdxToState = [
+  CatImageState.FadeOut,
+  CatImageState.Active,
+  CatImageState.FadeIn,
+];
+
 const Container = styled.View`
   flex: 1;
 
   align-items: center;
+`;
+const CatImageContainer = styled.View`
+  width: 320px;
+  height: 320px;
 `;

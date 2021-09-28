@@ -19,12 +19,18 @@ export const useBookmarkedCats = () => {
     error,
   } = useSWR<IBookmarkResponse>('/favourites');
 
-  console.log('fav', data);
-
   return data;
 };
 export const useVote = () => {
   return async (id: string, voteKind: VoteKind) => {
+    if (false && Math.random() > 0.5) {
+      return new Promise((_, reject) => {
+        setTimeout(() => {
+          reject('mockup error');
+        }, 150);
+      });
+    }
+
     return Promise.all([
       mutator('/votes', {
         image_id: id,
@@ -46,8 +52,6 @@ export const useCat = (offset: number) => {
     mutate: refetch,
   } = useSWR<ICatResponse>('/images/search?limit=10');
 
-  console.log(data);
-
   useEffect(() => {
     if (offset >= page * LoadPerRequest + LoadPerRequest * Threshold) {
       refetch();
@@ -66,9 +70,11 @@ export const useCat = (offset: number) => {
     setResult(result => [...(result || []), ...data]);
   }, [data]);
 
-  console.log(result, offset);
-
-  return result?.[offset] || {} as ICat;
+  return [
+    result?.[offset - 1] || {} as ICat,
+    result?.[offset] || {} as ICat,
+    result?.[offset + 1] || {} as ICat
+  ];
 /*
   return {
     data,
