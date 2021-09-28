@@ -5,6 +5,7 @@ import useSWR, { useSWRConfig } from 'swr';
 import { IBookmark, ICat, VoteKind } from 'model';
 import { mutator } from './fetcher';
 
+const PageSize = 45;
 const LoadPerRequest = 10;
 const Threshold = 0.7;
 
@@ -13,24 +14,24 @@ interface ICatResponse extends Array<ICat> {
 interface IBookmarkResponse extends Array<IBookmark>{
 };
 
-export const useBookmarkedCats = () => {
+export const useBookmarkedCats = (page: number) => {
+  const [result, setResult] = useState<IBookmark[]>([]);
   const {
     data,
     error,
-  } = useSWR<IBookmarkResponse>('/favourites');
+  } = useSWR<IBookmarkResponse>(`/favourites?limit=${PageSize}&page=${page}`, {
+    suspense: false,
+  });
 
-  return data;
+  useEffect(() => {
+    if (!data) return;
+    setResult(result => [...result, ...data]);
+  }, [data]);
+
+  return result;
 };
 export const useVote = () => {
   return async (id: string, voteKind: VoteKind) => {
-    if (false && Math.random() > 0.5) {
-      return new Promise((_, reject) => {
-        setTimeout(() => {
-          reject('mockup error');
-        }, 150);
-      });
-    }
-
     return Promise.all([
       mutator('/votes', {
         image_id: id,
