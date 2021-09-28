@@ -17,6 +17,7 @@ export const BookmarksPage = withSpinner(({
         data={cats}
         keyExtractor={x => `${x.id}`}
         renderItem={({ item }) => <BookmarkItem data={item} />}
+        numColumns={3}
       />
     </Container>
   );
