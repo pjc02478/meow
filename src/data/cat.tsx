@@ -3,7 +3,7 @@ import FastImage from 'react-native-fast-image';
 import useSWR, { useSWRConfig } from 'swr';
 
 import { IBookmark, ICat, VoteKind } from 'model';
-import { mutator } from './fetcher';
+import { HttpMethods, mutator } from './fetcher';
 
 const PageSize = 45;
 const LoadPerRequest = 10;
@@ -11,7 +11,7 @@ const Threshold = 0.7;
 
 interface ICatResponse extends Array<ICat> {
 };
-interface IBookmarkResponse extends Array<IBookmark>{
+interface IBookmarkResponse extends Array<IBookmark> {
 };
 
 export const useBookmarkedCats = (page: number) => {
@@ -34,6 +34,7 @@ export const useBookmarkedCats = (page: number) => {
     loading: !data && isValidating,
   };
 };
+
 export const useVote = () => {
   return async (id: string, voteKind: VoteKind) => {
     return Promise.all([
@@ -45,6 +46,11 @@ export const useVote = () => {
         image_id: id,
       }),
     ]);
+  };
+};
+export const useRemoveBookmark = () => {
+  return async (id: number) => {
+    await mutator(`/favourites/${id}`, {}, HttpMethods.Delete);
   };
 };
 

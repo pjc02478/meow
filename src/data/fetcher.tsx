@@ -4,9 +4,16 @@ import { API_ENDPOINT, API_KEY } from 'react-native-dotenv';
 const Endpoint = API_ENDPOINT || 'https://api.thecatapi.com/v1';
 const ApiKey = API_KEY;
 
-export const mutator = async (url: string, body: Record<string, any>) => {
+export enum HttpMethods {
+  Get = 'GET',
+  Post = 'POST',
+  Patch = 'PATCH',
+  Delete = 'DELETE',
+};
+
+export const mutator = async (url: string, body: Record<string, any>, method?: HttpMethods) => {
   const response = await (await fetch(Endpoint + url, {
-    method: 'POST',
+    method: method || 'POST',
     body: JSON.stringify(body),
     headers: {
       ['Content-Type']: 'application/json',

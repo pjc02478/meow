@@ -1,11 +1,15 @@
 import React, { memo } from 'react';
 import styled from 'styled-components/native';
-import { Dimensions } from 'react-native';
+import { Alert, Dimensions } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
+import { HorizontalLayout, Push } from 'atom/layout';
+import { useRemoveBookmark } from 'data';
 import { IBookmark } from 'model';
+import { withOnPress } from 'hoc';
 
 const { width: deviceWidth } = Dimensions.get('window');
 
@@ -16,9 +20,26 @@ export const BookmarkItem = memo(({
   data,
 }: BookmarkItemProps) => {
   const navigation = useNavigation();
+  const removeBookmark = useRemoveBookmark();
 
+  const onRemoveBookmark = async () => {
+    await removeBookmark(data.id);
+  };
   const onPressImage = () => {
     navigation.navigate('ImageViewer', { uri: data.image.url });
+  };
+  const onPressRemove = () => {
+    Alert.alert('', 'Do you really want to remove this cat from the list?', [
+      {
+        style: 'cancel',
+        text: 'No',
+      },
+      {
+        style: 'destructive',
+        text: 'Yes',
+        onPress: onRemoveBookmark,
+      }
+    ])
   };
 
   return (
@@ -28,6 +49,13 @@ export const BookmarkItem = memo(({
       <InnerImage
         source={{ uri: data.image.url }}
       />
+
+      <HorizontalLayout fill style={{ zIndex: 10 }}>
+        <Push />
+        <RemoveIcon
+          onPress={onPressRemove}
+        />
+      </HorizontalLayout>
     </Container>
   );
 }, (prev: BookmarkItemProps, next: BookmarkItemProps) => {
@@ -35,10 +63,23 @@ export const BookmarkItem = memo(({
 });
 
 const Container = styled(TouchableOpacity)`
+  width: ${deviceWidth / 3}px;
+  height: ${deviceWidth / 3}px;
 `;
 const InnerImage = styled(FastImage).attrs({
   resizeMode: 'cover',
 })`
-  width: ${deviceWidth / 3}px;
-  height: ${deviceWidth / 3}px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+
+  width: 100%;
+  height: 100%;
 `;
+
+const RemoveIcon = withOnPress(styled(Ionicons).attrs({
+  name: 'close-circle',
+  size: 28,
+})`
+  z-index: 10;
+`);
