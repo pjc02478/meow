@@ -1,9 +1,9 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import { debounce } from 'lodash';
 
 import { Push, Space } from 'atom/layout';
-import { CatImage, CatImageState, VoteButtons } from 'component/vote';
+import { InitialImageLoader, CatImage, CatImageState, VoteButtons } from 'component/vote';
 import { useCat } from 'data';
 import { withSpinner } from 'hoc';
 
@@ -22,8 +22,11 @@ export const VotePage = withSpinner(({
 
   return (
     <Container>
-      <Push />
+      <InitialImageLoader
+        uri={cats[1].url}
+      />
 
+      <Push />
       <CatImageContainer>
         {cats.map((x, idx) => x.id && (
           <CatImage
@@ -33,8 +36,8 @@ export const VotePage = withSpinner(({
           />
         ))}
       </CatImageContainer>
-
       <Space height={40} />
+
       <VoteButtons
         data={cats[1]}
         onVote={onVote}
