@@ -6,24 +6,29 @@ import { Button } from 'atom/button';
 import { HorizontalLayout, Space } from 'atom/layout';
 import { useVote } from 'data';
 import { ICat, VoteKind } from 'model';
+import { withTask } from 'hoc';
 
 interface VoteButtonsProps {
   data: ICat;
   onVote: () => void;
   onRollback: () => void;
 };
-export const VoteButtons = ({
+export const VoteButtons = withTask<VoteButtonsProps>(({
   data,
+  isBusy,
+  runTask,
   onVote,
   onRollback,
-}: VoteButtonsProps) => {
+}) => {
   const toast = useToast();
   const vote = useVote();
 
   const onPressVote = async (voteKind: VoteKind) => {
+    if (isBusy) return;
+
     try {
       onVote();
-      await vote(data.id, voteKind);
+      await runTask(() => vote(data.id, voteKind));
     } catch(e) {
       console.error(e);
       toast.show('에러가 발생했습니다.', { type: 'danger' });
@@ -46,19 +51,17 @@ export const VoteButtons = ({
       </DislikeButton>
     </Container>
   );
-};
+});
 
 const Container = styled(HorizontalLayout)`
 `;
 const LikeButton = styled(Button).attrs({
   icon: 'like',
   mode: 'contained',
-  debounce: 500,
 })`
 `;
 const DislikeButton = styled(Button).attrs({
   icon: 'dislike',
   mode: 'contained',
-  debounce: 500,
 })`
 `;
