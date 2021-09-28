@@ -19,6 +19,7 @@ export const useBookmarkedCats = (page: number) => {
   const {
     data,
     error,
+    isValidating,
   } = useSWR<IBookmarkResponse>(`/favourites?limit=${PageSize}&page=${page}`, {
     suspense: false,
   });
@@ -28,7 +29,10 @@ export const useBookmarkedCats = (page: number) => {
     setResult(result => [...result, ...data]);
   }, [data]);
 
-  return result;
+  return {
+    data: result,
+    loading: !data && isValidating,
+  };
 };
 export const useVote = () => {
   return async (id: string, voteKind: VoteKind) => {
@@ -76,10 +80,4 @@ export const useCat = (offset: number) => {
     result?.[offset] || {} as ICat,
     result?.[offset + 1] || {} as ICat
   ];
-/*
-  return {
-    data,
-    error,
-  };
-  */
 };

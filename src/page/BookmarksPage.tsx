@@ -5,12 +5,16 @@ import { useBookmarkedCats } from 'data';
 import { BookmarkItem } from 'component/bookmark';
 import { withSpinner } from 'hoc';
 import { FlatList } from 'react-native';
+import { ActivityIndicator } from 'react-native-paper';
 
 export const BookmarksPage = withSpinner(({
 
 }) => {
   const [page, setPage] = useState(0);
-  const cats = useBookmarkedCats(page);
+  const {
+    data: cats,
+    loading,
+  } = useBookmarkedCats(page);
 
   const onEndReached = () => {
     setPage(page => page + 1);
@@ -23,8 +27,9 @@ export const BookmarksPage = withSpinner(({
         keyExtractor={x => `${x.id}`}
         renderItem={({ item }) => <BookmarkItem data={item} />}
         numColumns={3}
-        onEndReachedThreshold={0.5}
+        onEndReachedThreshold={0.8}
         onEndReached={onEndReached}
+        ListFooterComponent={loading ? <ActivityIndicator/> : <></>}
       />
     </Container>
   );
