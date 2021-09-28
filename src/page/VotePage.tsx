@@ -2,10 +2,9 @@ import React, { useCallback, useState } from 'react';
 import styled from 'styled-components/native';
 import { debounce } from 'lodash';
 
-import { useCat } from 'data';
-import { CatImage, CatImageState, VoteButtons } from 'component/vote';
-import { ActivityIndicator, Text } from 'react-native-paper';
 import { Push, Space } from 'atom/layout';
+import { CatImage, CatImageState, VoteButtons } from 'component/vote';
+import { useCat } from 'data';
 import { withSpinner } from 'hoc';
 
 export const VotePage = withSpinner(({
