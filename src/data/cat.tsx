@@ -60,7 +60,7 @@ export const useCat = (offset: number) => {
     }
 
     if (result) {
-      FastImage.preload(result!.slice(offset, offset + 2).map(x => ({
+      FastImage.preload(result.slice(offset + 1, offset + 3).map(x => ({
         uri: x.url
       })));
     }
