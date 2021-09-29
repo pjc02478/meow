@@ -28,7 +28,7 @@ export const CatImage = ({
   }, [state]);
   const styles = useAnimatedStyle(() => ({
     opacity: 1 - Math.abs(value.value),
-    transform: [ { translateX: (value.value) * 360 } ],
+    transform: [{ translateX: (value.value) * 360 }],
   }), []);
 
   return (

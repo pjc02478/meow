@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { useToast } from 'react-native-toast-notifications';
 
 import { Button } from 'atom/button';
 import { HorizontalLayout, Space } from 'atom/layout';
@@ -28,7 +27,7 @@ export const VoteButtons = withTask<VoteButtonsProps>(({
     try {
       onVote();
       await runTask(() => vote(data.id, voteKind));
-    } catch(e) {
+    } catch (e) {
       onRollback();
     }
   };
@@ -53,12 +52,10 @@ export const VoteButtons = withTask<VoteButtonsProps>(({
 const Container = styled(HorizontalLayout)`
 `;
 const LikeButton = styled(Button).attrs({
-  //icon: 'like-outline',
   mode: 'contained',
 })`
 `;
 const DislikeButton = styled(Button).attrs({
-  //icon: 'dislike-outline',
   mode: 'contained',
 })`
 `;

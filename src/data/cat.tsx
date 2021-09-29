@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import FastImage from 'react-native-fast-image';
-import useSWR, { useSWRConfig } from 'swr';
+import useSWR from 'swr';
 
 import { IBookmark, ICat, VoteKind } from 'model';
-import { fetcher, HttpMethods, mutator } from './fetcher';
 import { IInfiniteDataProvider, useInfiniteData } from 'data';
+import { fetcher, HttpMethods, mutator } from './fetcher';
 import { withPrefetch } from './withPrefetch';
 import { retryHandler, toastHandler } from './handler';
 
@@ -68,7 +68,7 @@ export const useCat = (offset: number) => {
 
     if (result) {
       FastImage.preload(result.slice(offset + 1, offset + 3).map(x => ({
-        uri: x.url
+        uri: x.url,
       })));
     }
   }, [offset, page, result]);
@@ -81,6 +81,6 @@ export const useCat = (offset: number) => {
   return [
     result?.[offset - 1] || {} as ICat,
     result?.[offset] || {} as ICat,
-    result?.[offset + 1] || {} as ICat
+    result?.[offset + 1] || {} as ICat,
   ];
 };

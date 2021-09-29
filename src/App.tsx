@@ -7,12 +7,10 @@ import Toast, { ToastProvider } from 'react-native-toast-notifications';
 import { SWRConfig } from 'swr';
 
 import { fetcher } from 'data/fetcher';
-import { prefetchFirstPage } from 'data/withPrefetch';
-import { BookmarkedCatsDataProvider } from 'data';
+import { BookmarkedCatsDataProvider, prefetchFirstPage } from 'data';
 import { Navigation } from './Navigation';
 
 const App = () => {
-
   prefetchFirstPage(BookmarkedCatsDataProvider, 45);
 
   return (
@@ -29,7 +27,7 @@ const App = () => {
         >
           <Navigation />
         </SWRConfig>
-        <Toast ref={(ref) => (global as any)['toast'] = ref} />
+        <Toast ref={(ref) => (global as any).toast = ref} />
       </ToastProvider>
     </SafeAreaView>
   );

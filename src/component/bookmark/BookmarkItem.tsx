@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components/native';
 import { Alert, Dimensions } from 'react-native';
 import FastImage from 'react-native-fast-image';
@@ -36,7 +36,7 @@ export const BookmarkItem = memo(({
         text: 'Yes',
         onPress: onRemove,
       }
-    ])
+    ]);
   };
 
   return (

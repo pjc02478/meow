@@ -17,7 +17,7 @@ export const ImageViewerPage = ({
   return (
     <Container>
       <LargeImage
-        source={{ uri: uri }}
+        source={{ uri }}
       />
     </Container>
   );

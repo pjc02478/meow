@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { useIsFocused } from '@react-navigation/native'; 
+import { useIsFocused } from '@react-navigation/native';
 import { uniqBy } from 'lodash';
 
 export interface IData {
@@ -36,12 +36,12 @@ export const useInfiniteData = <T extends IInfiniteDataProvider<TData>, TData ex
         options.pageSize || DefaultUseInfiniteDataOptions.pageSize!,
         page,
       );
-      
+
       setResult(result => uniqBy([...result, ...data], 'id'));
       setError(null);
 
       return data.length > 0;
-    } catch(e) {
+    } catch (e) {
       console.error(e);
       setError(e);
 
@@ -52,15 +52,18 @@ export const useInfiniteData = <T extends IInfiniteDataProvider<TData>, TData ex
   };
   const advance = async () => {
     const nextPage = page + 1;
-    if (await fetchPage(nextPage))
+    if (await fetchPage(nextPage)) {
       setPage(nextPage);
+    }
   };
 
   useEffect(() => {
-    if (!isFocused)
+    if (!isFocused) {
       return;
-    if (page >= 0)
+    }
+    if (page >= 0) {
       fetchPage(page);
+    }
   }, [isFocused]);
   useEffect(() => {
     advance();

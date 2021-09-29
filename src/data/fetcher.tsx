@@ -15,8 +15,9 @@ export enum HttpMethods {
 
 const fetchJson = async (input: RequestInfo, init?: RequestInit | undefined) => {
   const resp = await fetch(input, init);
-  if (resp.status >= 400)
+  if (resp.status >= 400) {
     throw new Error(await resp.text());
+  }
   return await resp.json();
 };
 
@@ -39,15 +40,16 @@ export const mutator = async (
     return response;
   } catch(e) {
     return new Promise((resolve, reject) => {
-      if (!errorHandler)
+      if (!errorHandler) {
         reject(e);
+      }
 
       errorHandler?.(e, async () => {
         try {
           resolve(
             await mutator(url, body, method, errorHandler),
           );
-        } catch(e) {
+        } catch (e) {
           reject(e);
         }
       }, () => {
