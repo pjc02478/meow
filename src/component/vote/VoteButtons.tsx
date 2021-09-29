@@ -53,12 +53,12 @@ export const VoteButtons = withTask<VoteButtonsProps>(({
 const Container = styled(HorizontalLayout)`
 `;
 const LikeButton = styled(Button).attrs({
-  icon: 'like',
+  //icon: 'like-outline',
   mode: 'contained',
 })`
 `;
 const DislikeButton = styled(Button).attrs({
-  icon: 'dislike',
+  //icon: 'dislike-outline',
   mode: 'contained',
 })`
 `;
