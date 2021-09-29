@@ -20,7 +20,6 @@ export const VoteButtons = withTask<VoteButtonsProps>(({
   onVote,
   onRollback,
 }) => {
-  const toast = useToast();
   const vote = useVote();
 
   const onPressVote = async (voteKind: VoteKind) => {
@@ -30,8 +29,6 @@ export const VoteButtons = withTask<VoteButtonsProps>(({
       onVote();
       await runTask(() => vote(data.id, voteKind));
     } catch(e) {
-      console.error(e);
-      toast.show('에러가 발생했습니다.', { type: 'danger' });
       onRollback();
     }
   };
