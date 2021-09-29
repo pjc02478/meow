@@ -14,9 +14,11 @@ jest.mock('react-native-reanimated', () => {
 });
 
 jest.mock('react-native-fast-image', () => {
-  return {
-    preload: jest.fn(),
+  const F = () => {
+    return <></>
   };
+  F.preload = jest.fn();
+  return F;
 });
 
 // Silence the warning: Animated: `useNativeDriver` is not supported because the native animated module is missing
