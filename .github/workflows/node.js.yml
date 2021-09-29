@@ -2,8 +2,8 @@ name: meow-ci
 
 # api 요청은 목업으로 수행되기 때문에 key는 아무거나 넣어도 무방함
 env:
-  API_ENDPOINT=https://api.thecatapi.com/v1
-  API_KEY=testkey
+  API_ENDPOINT: https://api.thecatapi.com/v1
+  API_KEY: testkey
 
 on:
   push:
