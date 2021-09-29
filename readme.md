@@ -67,11 +67,11 @@ const onSubmit = async () => {
 }
 ```
 
-이를 해결하기 위해 __전역적인 에러 핸들러__를 작성하였습니다.
-또한 다양한 API 작업 특성상 에러 핸들러는 최소한 아래 2가지 기능을 구현해야 합니다.
+이를 해결하기 위해 __전역적인 에러 핸들러__ 를 작성하였습니다.
+이 프로젝트에서는 최소한으로 아래 2가지 기능을 가진 에러 핸들러를 작성하였습니다.
 
-* [재시도 가능한 API](src/data/handler/retryHandler.tsx)
-* [실패했지만 실패 메세지만 띄우고 마는 API](src/data/handler/toastHandler.tsx)
+* [retryHandler - 재시도 가능한 API](src/data/handler/retryHandler.tsx)
+* [toastHandler - 실패했지만 실패 메세지만 띄우고 마는 API](src/data/handler/toastHandler.tsx)
 
 에러 핸들러는 `에러` 객체 이외에도 `retry` 와 `reject` 두개의 함수를 인자로 받습니다.<br/>
 `retry` 호출 시 API 요청을 그대로 한번 더 실행합니다. 원래의 promise는 재시도 요청이 끝날때까지 계속 대기합니다. (재시도를 여러번 할 수 있습니다. 최종적으로 요청은 resolve되거나, `reject` 가 호출될 때 까지 대기합니다.)<br/>
