@@ -32,11 +32,13 @@ export const useInfiniteData = <T extends IInfiniteDataProvider<TData>, TData ex
         options.pageSize || DefaultUseInfiniteDataOptions.pageSize!,
         page,
       );
+      console.log('data', data);
       setResult(result => [...result, ...data]);
       setError(null);
 
       return true;
     } catch(e) {
+      console.log('err', e);
       setError(e);
 
       return false;
@@ -45,7 +47,10 @@ export const useInfiniteData = <T extends IInfiniteDataProvider<TData>, TData ex
     }
   };
   const advance = async () => {
-    const nextPage = page + 1;
+    console.log(error);
+    const nextPage = !!error
+      ? page
+      : page + 1;
     if (await fetchPage(nextPage))
       setPage(nextPage);
   };
