@@ -1,4 +1,7 @@
 import 'react-native-gesture-handler/jestSetup';
+import fetchMock from 'jest-fetch-mock';
+
+fetchMock.enableMocks();
 
 jest.mock('react-native-reanimated', () => {
   const Reanimated = require('react-native-reanimated/mock');
