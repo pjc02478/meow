@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { useFocusEffect } from '@react-navigation/native'; 
+import { useIsFocused } from '@react-navigation/native'; 
 import { uniqBy } from 'lodash';
 
 export interface IData {
@@ -18,7 +18,8 @@ export const useInfiniteData = <T extends IInfiniteDataProvider<TData>, TData ex
   options: UseInfiniteDataOptions = DefaultUseInfiniteDataOptions,
 ) => {
   const dataProvider = useMemo(() => new dataProviderType(), [dataProviderType]);
-  const [page, setPage] = useState(0);
+  const isFocused = useIsFocused();
+  const [page, setPage] = useState(-1);
   const [result, setResult] = useState<TData[]>([]);
   const [error, setError] = useState<any>();
   const [loading, setLoading] = useState(false);
@@ -39,7 +40,7 @@ export const useInfiniteData = <T extends IInfiniteDataProvider<TData>, TData ex
       setResult(result => uniqBy([...result, ...data], 'id'));
       setError(null);
 
-      return true;
+      return data.length > 0;
     } catch(e) {
       console.error(e);
       setError(e);
@@ -50,22 +51,23 @@ export const useInfiniteData = <T extends IInfiniteDataProvider<TData>, TData ex
     }
   };
   const advance = async () => {
-    const nextPage = !!error
-      ? page
-      : page + 1;
+    const nextPage = page + 1;
     if (await fetchPage(nextPage))
       setPage(nextPage);
   };
 
-  useFocusEffect(useCallback(() => {
-    fetchPage(page);
-  }, []));
   useEffect(() => {
-    fetchPage(page);
+    if (!isFocused)
+      return;
+    if (page >= 0)
+      fetchPage(page);
+  }, [isFocused]);
+  useEffect(() => {
+    advance();
   }, []);
 
   return {
-    page,
+    page: Math.max(0, page),
     data: result,
     loading,
     error,
