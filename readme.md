@@ -6,6 +6,15 @@ meow
 Setup
 ----
 이 프로젝트는 `yarn` 을 사용합니다.
+
+`.env` 파일을 생성하고 아래 값을 입력합니다.
+```
+API_ENDPOINT=
+API_KEY=
+```
+* `API_ENDPOINT`(Optional): 기본값(`https://api.thecatapi.com/v1`) 에서 변경하고 싶을 때만 지정합니다.
+* `API_KEY`(Required): 발급받은 api key를 입력합니다.
+
 ```
 yarn
 yarn android
