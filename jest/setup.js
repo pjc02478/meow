@@ -1,3 +1,4 @@
+import React from 'react';
 import 'react-native-gesture-handler/jestSetup';
 import fetchMock from 'jest-fetch-mock';
 
@@ -19,6 +20,15 @@ jest.mock('react-native-fast-image', () => {
   };
   F.preload = jest.fn();
   return F;
+});
+
+jest.mock('@react-navigation/core', () => {
+  return {
+    useNavigation: jest.fn(() => {
+      return jest.fn();
+    }),
+    useIsFocused: jest.fn(() => false),
+  };
 });
 
 // Silence the warning: Animated: `useNativeDriver` is not supported because the native animated module is missing

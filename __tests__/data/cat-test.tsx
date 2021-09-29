@@ -24,9 +24,13 @@ describe('useCat', () => {
 
   beforeAll(() => {
     fetch.mockResponseOnce(({ url }: { url: string }) => {
-      if (!url.startsWith(API_ENDPOINT + '/images/search')) return;
+      if (!url.startsWith(API_ENDPOINT + '/images/search'))
+        return Promise.reject('unexpected call');
       return Promise.resolve(JSON.stringify(response));
     });
+  });
+  afterAll(() => {
+    fetch.mockClear();
   });
 
   it('should return array of cats', async () => {
@@ -140,7 +144,8 @@ describe('useBookmarkedCats', () => {
 
   beforeAll(() => {
     fetch.mockResponse(({ url }: { url: string }) => {
-      if (!url.startsWith(API_ENDPOINT + '/favourites')) return;
+      if (!url.startsWith(API_ENDPOINT + '/favourites'))
+        return Promise.reject('unexpected call');
       return Promise.resolve(JSON.stringify(response));
     });
   });
@@ -164,14 +169,14 @@ describe('useBookmarkedCats', () => {
     const r = renderHook(() => {
       return useBookmarkedCats();
     });
-    const v = r.result.current;
 
     expect(fetch).toHaveBeenCalledWith(
       API_ENDPOINT + `/favourites?limit=${PageSize}&page=0`,
       {"headers": {"x-api-key": API_KEY}}
     );
 
-    await act(async () => await v.advance());
+    await waitFor(() => !r.result.current.loading);
+    await act(async () => await r.result.current.advance());
 
     expect(fetch).toHaveBeenCalledWith(
       API_ENDPOINT + `/favourites?limit=${PageSize}&page=1`,

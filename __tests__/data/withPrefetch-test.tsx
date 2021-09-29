@@ -53,7 +53,7 @@ it('should return prefetched data', async () => {
 
   await act(async () => await prefetchFirstPage(FooDataProvider, 10));
 
-  fetch.mockReject(() => Promise.reject('should not be fetched more than once'));
+  fetch.mockRejectOnce(() => Promise.reject('should not be fetched more than once'));
 
   const enhancedDataProvider = withPrefetch(FooDataProvider);
   const instance = new enhancedDataProvider();
