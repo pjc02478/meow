@@ -10,6 +10,9 @@ export const InitialImageLoader = ({
 }: InitialImageLoaderProps) => {
 
   useEffect(() => {
+    // fallback:
+    //   If the image is not loaded for more than 1 second
+    //   for any reason, proceed to app screen anyway.
     const tid = setTimeout(() => {
       SplashScreen.hide();
     }, 1000);
