@@ -1,5 +1,6 @@
 import 'react-native';
 import React, { useEffect } from 'react';
+import { Text } from 'react-native';
 
 import { withOnPress } from 'hoc';
 
@@ -9,9 +10,9 @@ const TestComponent = withOnPress(({
 }) => {
 
   return (
-    <>
+    <Text>
       Hello
-    </>
+    </Text>
   );
 });
 
@@ -36,4 +37,14 @@ it('should react to press event', async () => {
   await fireEvent.press(component.container);
 
   expect(pressed).toEqual(true);
+});
+
+it('should render children', async () => {
+  const component = await render((
+    <TestComponent
+      onPress={() => {}}
+    />
+  ));
+
+  expect(component.getByText('Hello')).toBeTruthy();
 });
