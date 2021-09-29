@@ -11,7 +11,10 @@ module.exports = {
   rules: {
     // https://github.com/typescript-eslint/typescript-eslint/issues/2540#issuecomment-692505191
     'no-use-before-define': 0,
+    // https://github.com/babel/babel-eslint/issues/8
+    'no-unused-vars': 0,
 
+    'no-extra-semi': 0,
     'new-cap': 0,
     'object-curly-newline': 0,
     'arrow-body-style': 0,
