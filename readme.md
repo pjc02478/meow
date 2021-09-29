@@ -1,8 +1,14 @@
-todo
-----
+meow
+====
 
-* [ ] 다음 고양이 preload
-* [ ] 
+Setup
+----
+이 프로젝트는 `yarn` 을 사용합니다.
+```
+yarn
+yarn android
+```
+
 
 Comments
 ----
@@ -85,3 +91,16 @@ const onSubmit = async () => {
   * 만약 `await modifyUser();` 코드 가 실패하고, 에러 핸들러가 `retryHandler` 로 지정되었을 경우 해당 Promise는 `재시도해서 성공했거나`, `유저가 재시도 하지 않기로 했거나` 둘 중 하나의 __최종적인 결과__ 가 나올 때 까지 계속 대기합니다.
   * `호출자` 에게 `재시도` 라는 중간과정은 신경쓰지 않아도 되는 부분이 되도록 했습니다.
   * 에러 핸들러를 지정하지 않으면 기존의 flow와 동일하게 동작합니다. 만약 `재시도` 과정을 신경쓰지 않는게 아니라 컨트롤하고싶다면, 해당 구현 또한 제약이 없습니다.
+
+
+#### 짧은 버전의 설명
+
+<img src="/imgs/retry.gif" width="320px" />
+
+위처럼 동작하는 코드는 아래 1줄의 api 요청으로 되어 있습니다.
+
+```tsx
+const onRemoveBookmark = (bookmark: IBookmark) => {
+  removeBookmark(bookmark.id);
+};
+```
