@@ -1,8 +1,8 @@
 import { mutate } from 'swr';
 import { API_ENDPOINT, API_KEY } from 'react-native-dotenv';
 
-const Endpoint = API_ENDPOINT || 'https://api.thecatapi.com/v1';
-const ApiKey = API_KEY;
+const Endpoint = String(API_ENDPOINT) || 'https://api.thecatapi.com/v1';
+const ApiKey = String(API_KEY);
 
 type ErrorHandler = (e: any, retry: () => void, reject: () => void) => void;
 
