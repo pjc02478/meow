@@ -1,6 +1,8 @@
 meow
 ====
 
+![workflow](https://github.com/pjc02478/meow/actions/workflows/node.js.yml/badge.svg)
+
 Setup
 ----
 이 프로젝트는 `yarn` 을 사용합니다.
