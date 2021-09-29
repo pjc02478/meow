@@ -22,8 +22,19 @@ jest.mock('react-native-fast-image', () => {
   return F;
 });
 
+jest.mock('react-native-splash-screen', () => {
+  return {
+    hide: jest.fn(),
+  };
+});
+
 jest.mock('@react-navigation/core', () => {
   return {
+    useRoute: jest.fn(() => {
+      return {
+        params: {},
+      };
+    }),
     useNavigation: jest.fn(() => {
       return jest.fn();
     }),
