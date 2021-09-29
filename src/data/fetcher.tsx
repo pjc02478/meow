@@ -13,6 +13,13 @@ export enum HttpMethods {
   Delete = 'DELETE',
 };
 
+const fetchJson = async (input: RequestInfo, init?: RequestInit | undefined) => {
+  const resp = await fetch(input, init);
+  if (resp.status >= 400)
+    throw new Error(await resp.text());
+  return await resp.json();
+};
+
 export const mutator = async (
   url: string,
   body: Record<string, any>,
@@ -20,14 +27,14 @@ export const mutator = async (
   errorHandler?: ErrorHandler,
 ) => {
   try {
-    const response = await (await fetch(Endpoint + url, {
+    const response = await fetchJson(Endpoint + url, {
       method: method || 'POST',
       body: JSON.stringify(body),
       headers: {
         ['Content-Type']: 'application/json',
         ['x-api-key']: ApiKey!,
       },
-    })).json();
+    });
     await mutate(url);
     return response;
   } catch(e) {
@@ -50,11 +57,11 @@ export const mutator = async (
   }
 };
 export const fetcher = async (url: string, init?: RequestInit) => {
-  return await (await fetch(Endpoint + url, {
+  return await fetchJson(Endpoint + url, {
     ...init,
     headers: {
       ...(init?.headers || {}),
       ['x-api-key']: ApiKey!,
     },
-  })).json();
+  });
 };
