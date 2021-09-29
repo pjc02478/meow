@@ -28,7 +28,7 @@ export const withPrefetch = <T extends IInfiniteDataProvider<TData>, TData exten
 
   return class EnhancedDataProvider implements IInfiniteDataProvider<TData> {
     async get(pageSize: number, page: number) {
-      if (!!prefecthData[cacheKey])
+      if (!!prefecthData[cacheKey] && page === 0)
         return prefecthData[cacheKey].slice(0, pageSize);
       return await instance.get(pageSize, page);
     }
