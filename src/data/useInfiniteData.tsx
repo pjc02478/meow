@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native'; 
+import { uniqBy } from 'lodash';
 
 export interface IData {
   id: number;
@@ -28,15 +30,18 @@ export const useInfiniteData = <T extends IInfiniteDataProvider<TData>, TData ex
   const fetchPage = async (page: number) => {
     try {
       setLoading(true);
+
       const data = await dataProvider.get(
         options.pageSize || DefaultUseInfiniteDataOptions.pageSize!,
         page,
       );
-      setResult(result => [...result, ...data]);
+      
+      setResult(result => uniqBy([...result, ...data], 'id'));
       setError(null);
 
       return true;
     } catch(e) {
+      console.error(e);
       setError(e);
 
       return false;
@@ -52,6 +57,9 @@ export const useInfiniteData = <T extends IInfiniteDataProvider<TData>, TData ex
       setPage(nextPage);
   };
 
+  useFocusEffect(useCallback(() => {
+    fetchPage(page);
+  }, []));
   useEffect(() => {
     fetchPage(page);
   }, []);
