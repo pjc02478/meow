@@ -7,7 +7,7 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx --ignore-pattern \"**/*.d.ts\""
   },
   "dependencies": {
     "@react-navigation/bottom-tabs": "^6.0.7",
