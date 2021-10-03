@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { FlatList } from 'react-native';
+import { Text } from 'react-native-paper';
 
 import { ListLoadingIndicator, RetryIndicator } from 'atom/feedback';
+import { Center } from 'atom/layout';
+import { Button } from 'atom/button';
 import { BookmarkItem } from 'component/bookmark';
 import { useBookmarkedCats } from 'data';
 import { withSpinner } from 'hoc';
 import { IBookmark } from 'model';
-import { Center } from 'atom/layout';
-import { Button } from 'atom/button';
-import { Text } from 'react-native-paper';
 
 export const BookmarksPage = withSpinner(({
 
